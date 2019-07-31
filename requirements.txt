@@ -1,0 +1,11 @@
+psycopg2==2.7.4
+urllib3==1.24.2
+CMRESHandler==1.0.0
+
+git+https://sergio_read:sergio_read@git.tesla-project.eu/tesla/tesla_config.git#egg=tesla_config
+git+https://sergio_read:sergio_read@git.tesla-project.eu/tesla/tesla_models.git#egg=tesla_models
+git+https://sergio_read:sergio_read@git.tesla-project.eu/tesla/tesla_flask.git#egg=tesla_flask
+
+# Install eventlet if you are working on Windows
+#eventlet
+pytest==3.6.0

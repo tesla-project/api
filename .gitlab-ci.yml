@@ -1,0 +1,30 @@
+before_script:
+  - python -V
+  - docker info
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+build-images:
+  stage: build
+  script:
+    - docker build --pull --no-cache -t "$CI_REGISTRY_IMAGE" -f docker/Dockerfile .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
+
+pages:
+  variables:
+    LOGS_FOLDER: './logs'
+    CONFIG: 'documentation'
+  script:
+    - virtualenv ENV && source ENV/bin/activate
+    - pip install --upgrade pip==9.0.3
+    - pip install -r requirements.txt
+    - pip install psycopg2==2.7.3.2 requests==2.21.0 SQLAlchemy==1.2.0 Cython==0.27.3 pyopenssl==17.5.0
+    - pip install sphinx sphinx-bootstrap-theme sphinx-jsondomain sphinxcontrib-httpdomain sphinx-better-theme graphviz recommonmark Flask-Sphinx-Themes
+    - cp README.md docs/README.md && cd docs && make html && mv _build/html ../public
+    - deactivate
+  artifacts:
+    paths:
+    - public
+  only:
+  - master

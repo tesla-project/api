@@ -1,0 +1,12 @@
+.idea/
+*.pyc
+venv/
+.eggs/
+.pytest_cache/
+tesla_models.egg-info/
+*.log
+docs/_build/
+docs/README.md
+test.db
+migrations
+
